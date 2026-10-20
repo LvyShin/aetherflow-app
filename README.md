@@ -10,9 +10,9 @@
 
 > **开源定位**: 聚焦 GitHub 独立发布，主打 Android (APK / F-Droid) 与 iOS (IPA / TrollStore / AltStore) 免费分发，无广告、零订阅、端到端数据自决。
 
-## 当前里程碑：本地流水管理
+## 当前里程碑：本地流水与账单导入
 
-已完成流水领域模型、SQLite 数据层、首页按日流水、账户筛选、金额隐私遮罩，以及新增、详情、在位修改、完整编辑和软删除闭环。报表、车主和设置页面已通过独立路由保留模块入口。
+已完成流水领域模型、SQLite 数据层、首页按日流水、账户筛选、金额隐私遮罩，以及新增、详情、在位修改、完整编辑和软删除闭环。微信/支付宝 XLSX、XLS 和 CSV 账单现已支持本地解析、预览、分类推断、自动去重和批量入账。报表、车主和其他设置页面已通过独立路由保留模块入口。
 
 数据在浏览器端使用 SQLite WASM 执行真实 SQL，并将数据库快照持久化到 IndexedDB。业务通过 `TransactionRepository` 与存储实现解耦，后续接入 Capacitor 原生 SQLite 时可复用领域层与页面。
 
@@ -36,6 +36,7 @@ pnpm build
 ## 工程结构
 
 - `src/modules/transactions`：流水领域模型、服务、数据仓储、状态、组合式逻辑、页面和按职责拆分的组件
+- `src/modules/bill_import`：微信/支付宝文件解析、分类推断、预览、去重和导入流程
 - `src/modules/accounts`：账户模型、默认数据和表结构
 - `src/modules/categories`：分类模型、默认分类树和表结构
 - `src/modules/reports|vehicle|settings`：独立业务模块
@@ -46,4 +47,4 @@ pnpm build
 
 详细依赖规则和新增模块模板见 `docs/architecture.md`。
 
-首个里程碑暂不包含凭证图片持久化、批量修改、预算、报表、车主和设置功能。
+当前暂不包含安全邮箱拉取、原生分享入口、凭证图片持久化、预算、报表和车主功能。
