@@ -13,6 +13,8 @@ export type AppIconName =
   | 'back'
   | 'plus'
   | 'trash'
+  | 'calendar'
+  | 'check-square'
 
 withDefaults(defineProps<{ name: AppIconName; size?: number }>(), { size: 20 })
 </script>
@@ -70,6 +72,14 @@ withDefaults(defineProps<{ name: AppIconName; size?: number }>(), { size: 20 })
     </template>
     <template v-else-if="name === 'trash'">
       <path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13M10 11v5m4-5v5" />
+    </template>
+    <template v-else-if="name === 'calendar'">
+      <rect x="4" y="5" width="16" height="15" rx="3" />
+      <path d="M8 3v4m8-4v4M8 10h2m4 0h2M8 14h2m4 0h2M4 8h16" />
+    </template>
+    <template v-else-if="name === 'check-square'">
+      <rect x="4" y="4" width="16" height="16" rx="3" />
+      <path d="m8 12 2.5 2.5L16 9" />
     </template>
   </svg>
 </template>

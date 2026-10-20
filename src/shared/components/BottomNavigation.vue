@@ -20,7 +20,7 @@ const tabs: Array<{ path: string; label: string; icon: AppIconName }> = [
       :key="tab.path"
       :to="tab.path"
       class="navigation-link"
-      :class="{ active: route.path === tab.path, 'third-position': index === 2 }"
+      :class="{ active: route.path.startsWith(tab.path), 'third-position': index === 2 }"
     >
       <AppIcon :name="tab.icon" />
       <span>{{ tab.label }}</span>
@@ -102,7 +102,6 @@ const tabs: Array<{ path: string; label: string; icon: AppIconName }> = [
 
 @media (min-width: 700px) {
   .bottom-navigation {
-    bottom: 14px;
     overflow: hidden;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);

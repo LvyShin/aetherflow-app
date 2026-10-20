@@ -41,6 +41,15 @@ const emit = defineEmits<{ close: [] }>()
   backdrop-filter: blur(4px);
 }
 
+.base-sheet.centered {
+  align-self: center;
+  width: min(100% - 32px, 360px);
+  max-height: none;
+  padding: 18px 20px 22px;
+  border-radius: 24px;
+  animation: fade-in 0.22s ease-out;
+}
+
 .base-sheet {
   width: min(100%, 480px);
   max-height: 92vh;
@@ -73,6 +82,17 @@ const emit = defineEmits<{ close: [] }>()
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
   }
 }
 </style>
