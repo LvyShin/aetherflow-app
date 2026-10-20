@@ -15,6 +15,8 @@ function transaction(overrides: Partial<TransactionView>): TransactionView {
     sourceTag: '支付宝',
     isVehicleExpense: false,
     vehicleId: null,
+    externalId: null,
+    importBatchId: null,
     createdAt: 1,
     updatedAt: 1,
     version: 1,
