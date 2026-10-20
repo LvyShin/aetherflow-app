@@ -5,6 +5,8 @@ defineProps<{
   transaction: TransactionView
   amountText: string
   privacyMode: boolean
+  selectionMode?: boolean
+  selected?: boolean
 }>()
 
 const emit = defineEmits<{ select: [transaction: TransactionView] }>()
@@ -16,7 +18,15 @@ function timeText(timestamp: number): string {
 </script>
 
 <template>
-  <button class="transaction-row" @click="emit('select', transaction)">
+  <button
+    class="transaction-row"
+    :class="{ selectable: selectionMode, selected }"
+    :aria-pressed="selectionMode ? selected : undefined"
+    @click="emit('select', transaction)"
+  >
+    <span v-if="selectionMode" class="selection-check" :class="{ checked: selected }">
+      {{ selected ? '✓' : '' }}
+    </span>
     <span class="transaction-icon">{{ transaction.categoryIcon }}</span>
     <span class="transaction-main">
       <strong>{{ transaction.merchant }}</strong>
@@ -27,7 +37,7 @@ function timeText(timestamp: number): string {
     </span>
     <span class="transaction-side">
       <strong :class="{ income: transaction.flowType === 'INCOME' }">
-        {{ transaction.flowType === 'INCOME' ? '+' : '-' }}¥{{ amountText }}
+        {{ transaction.flowType === 'INCOME' ? '+' : transaction.flowType === 'TRANSFER' ? '↔' : '-' }}¥{{ amountText }}
       </strong>
       <small>{{ transaction.accountName }} · {{ timeText(transaction.transactedAt) }}</small>
     </span>
@@ -50,6 +60,14 @@ function timeText(timestamp: number): string {
   cursor: pointer;
 }
 
+.transaction-row.selectable {
+  grid-template-columns: 24px 42px minmax(0, 1fr) auto;
+}
+
+.transaction-row.selected {
+  background: var(--primary-soft);
+}
+
 .transaction-row:last-child {
   border-bottom: 0;
 }
@@ -66,6 +84,23 @@ function timeText(timestamp: number): string {
   border-radius: 14px;
   background: var(--surface-soft);
   font-size: 1.25rem;
+}
+
+.selection-check {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--muted);
+  border-radius: 7px;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.selection-check.checked {
+  border-color: var(--primary);
+  background: var(--primary);
 }
 
 .transaction-main,
@@ -119,6 +154,10 @@ function timeText(timestamp: number): string {
     grid-template-columns: 38px minmax(0, 1fr) auto;
     padding-right: 11px;
     padding-left: 11px;
+  }
+
+  .transaction-row.selectable {
+    grid-template-columns: 22px 38px minmax(0, 1fr) auto;
   }
 
   .transaction-icon {

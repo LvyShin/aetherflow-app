@@ -6,6 +6,8 @@ defineProps<{
   group: TransactionGroup
   privacyMode: boolean
   displayAmount: (amount: number) => string
+  selectionMode?: boolean
+  selectedIds?: string[]
 }>()
 
 const emit = defineEmits<{ select: [transaction: TransactionView] }>()
@@ -28,6 +30,8 @@ const emit = defineEmits<{ select: [transaction: TransactionView] }>()
         :key="transaction.id"
         :amount-text="displayAmount(transaction.amount)"
         :privacy-mode="privacyMode"
+        :selected="selectedIds?.includes(transaction.id)"
+        :selection-mode="selectionMode"
         :transaction="transaction"
         @select="emit('select', $event)"
       />
