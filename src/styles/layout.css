@@ -1,0 +1,37 @@
+.app-shell {
+  position: relative;
+  width: min(100%, 480px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  background: var(--bg);
+}
+
+.app-main {
+  padding: 14px 14px 24px;
+}
+
+@media (max-width: 360px) {
+  .app-main {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@media (min-width: 700px) {
+  body {
+    background:
+      radial-gradient(circle at 25% 10%, rgba(56, 85, 224, 0.09), transparent 30%),
+      var(--bg);
+  }
+
+  .app-shell {
+    min-height: calc(100vh - 28px);
+    margin-top: 14px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 0 24px 70px rgba(35, 46, 74, 0.12);
+  }
+}
