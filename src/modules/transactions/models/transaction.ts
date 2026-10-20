@@ -14,6 +14,8 @@ export interface TransactionEntity {
   sourceTag: string
   isVehicleExpense: boolean
   vehicleId: string | null
+  externalId: string | null
+  importBatchId: string | null
   createdAt: number
   updatedAt: number
   version: number
@@ -39,6 +41,8 @@ export interface TransactionDraft {
   sourceTag: string
   isVehicleExpense?: boolean
   vehicleId?: string | null
+  externalId?: string | null
+  importBatchId?: string | null
 }
 
 export interface TransactionTotals {
@@ -53,4 +57,10 @@ export interface TransactionGroup {
   expense: number
   income: number
   items: TransactionView[]
+}
+
+export interface TransactionImportResult {
+  inserted: number
+  duplicates: number
+  batchId: string
 }

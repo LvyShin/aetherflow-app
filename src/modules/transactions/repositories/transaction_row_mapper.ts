@@ -12,6 +12,8 @@ export interface TransactionRow {
   source_tag: string | null
   is_vehicle_expense: number
   vehicle_id: string | null
+  external_id: string | null
+  import_batch_id: string | null
   created_at: number
   updated_at: number
   version: number
@@ -36,6 +38,8 @@ export function mapTransactionRow(row: TransactionRow): TransactionView {
     sourceTag: row.source_tag ?? '',
     isVehicleExpense: Boolean(row.is_vehicle_expense),
     vehicleId: row.vehicle_id,
+    externalId: row.external_id,
+    importBatchId: row.import_batch_id,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     version: row.version,

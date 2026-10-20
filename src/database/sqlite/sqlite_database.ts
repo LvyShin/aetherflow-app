@@ -4,8 +4,11 @@ import sqlWasmUrl from 'sql.js/dist/sql-wasm.wasm?url'
 export class SqliteDatabase {
   private constructor(private readonly database: Database) {}
 
-  static async create(snapshot: Uint8Array | null): Promise<SqliteDatabase> {
-    const SQL = await initSqlJs({ locateFile: () => sqlWasmUrl })
+  static async create(
+    snapshot: Uint8Array | null,
+    locateWasm: () => string = () => sqlWasmUrl,
+  ): Promise<SqliteDatabase> {
+    const SQL = await initSqlJs({ locateFile: locateWasm })
     return new SqliteDatabase(new SQL.Database(snapshot ?? undefined))
   }
 

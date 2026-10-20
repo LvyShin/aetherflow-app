@@ -11,6 +11,8 @@ export const TRANSACTION_SCHEMA_SQL = `
     source_tag TEXT,
     is_vehicle_expense INTEGER DEFAULT 0,
     vehicle_id TEXT,
+    external_id TEXT,
+    import_batch_id TEXT,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL,
     version INTEGER DEFAULT 1,
@@ -29,4 +31,10 @@ export const TRANSACTION_SCHEMA_SQL = `
     setting_value TEXT NOT NULL,
     updated_at INTEGER NOT NULL
   );
+`
+
+export const TRANSACTION_IMPORT_SCHEMA_SQL = `
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_external_id
+    ON transactions(external_id)
+    WHERE external_id IS NOT NULL AND is_deleted = 0;
 `

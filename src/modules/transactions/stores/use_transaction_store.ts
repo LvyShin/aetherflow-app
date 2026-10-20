@@ -2,7 +2,11 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { AccountEntity } from '../../accounts/models/account'
 import type { CategoryEntity } from '../../categories/models/category'
-import type { TransactionDraft, TransactionView } from '../models/transaction'
+import type {
+  TransactionDraft,
+  TransactionImportResult,
+  TransactionView,
+} from '../models/transaction'
 import { SqliteTransactionRepository } from '../repositories/sqlite_transaction_repository'
 import {
   calculateTransactionTotals,
@@ -76,9 +80,24 @@ export const useTransactionStore = defineStore('transactions', () => {
     await refreshTransactions()
   }
 
+  async function importTransactions(
+    drafts: TransactionDraft[],
+    batchId: string,
+  ): Promise<TransactionImportResult> {
+    const result = await repository.importTransactions(drafts, batchId)
+    await refreshTransactions()
+    return result
+  }
+
   async function deleteTransaction(id: string): Promise<void> {
     await repository.deleteTransaction(id)
     await refreshTransactions()
+  }
+
+  async function deleteTransactions(ids: string[]): Promise<number> {
+    const deleted = await repository.deleteTransactions(ids)
+    await refreshTransactions()
+    return deleted
   }
 
   function setAccountFilter(accountId: string): void {
@@ -112,7 +131,9 @@ export const useTransactionStore = defineStore('transactions', () => {
     initialize,
     createTransaction,
     updateTransaction,
+    importTransactions,
     deleteTransaction,
+    deleteTransactions,
     setAccountFilter,
     togglePrivacy,
     displayAmount,
